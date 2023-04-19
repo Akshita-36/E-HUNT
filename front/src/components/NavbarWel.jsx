@@ -55,6 +55,7 @@ function NavbarWel() {
         fetch('/auth/signout',{
             method:'POST',
         });
+        window.localStorage.removeItem("userId")
         setStatus(true);
     }
 

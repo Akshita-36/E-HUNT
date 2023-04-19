@@ -25,7 +25,6 @@ const Thead = styled.thead`
 
 const Th = styled.th`
     padding : 5px 20px;
-
     text-align: left;
 `;
 
@@ -56,7 +55,6 @@ function AdminList() {
         fetch('/auth/admin')
         .then(result=> result.json() )
         .then(list=>{
-            console.log(list);
                 setUserData(list);
             }).catch(err=>{
                 console.log(err);

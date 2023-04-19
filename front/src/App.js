@@ -16,6 +16,51 @@ import {
   Route,
 } from "react-router-dom";
 import AdminPage from './pages/AdminPage';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
+function CheckLoginAndLevel(props) {
+  const [levelUnlocked, setLevelUnlocked] = useState(false)
+  const [isLoggedIn, setLoggedIn] = useState(localStorage.getItem("userId"))
+  const Body = props.body
+  const level = props.level
+  const navigate = useNavigate()
+
+  async function getUserLevel() {
+    const response = await fetch("/auth/level/get", {
+      method: 'POST',
+      body: JSON.stringify({ id: localStorage.getItem("userId") }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+    const parse = await response.json()
+    console.log(parse);
+    const userLevel = parse.level
+    if(level <= userLevel || (level === 1 && userLevel === 0)) {
+      setLevelUnlocked(true)
+    }
+    else {
+      console.log(level, userLevel);
+      navigate("/welcome")
+    }
+  }
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      getUserLevel()
+    }
+    else {
+      setLoggedIn(localStorage.getItem("userId"))
+      navigate("/signin")
+    }
+    console.log(levelUnlocked);
+  }, [isLoggedIn, levelUnlocked])
+
+  return (
+    <>
+      {isLoggedIn ? levelUnlocked ? < Body /> : <>Loading...</> :navigate("/signin")}
+    </>
+  )
+}
 
 function App() {
   return (
