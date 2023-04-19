@@ -11,11 +11,18 @@ dotenv.config();
 const mongoose = require("mongoose");
 const User = require('./models/User');
 
+const path = require("path");
+
 mongoose.connect(process.env.MONGO_URL).then(()=>console.log("DB successfully connected!!")).catch(
     (err)=>{
         console.log(err);
     }
 )
+
+app.use(express.static('build'));
+app.get('*',(req,res)=>{
+    res.sendFile(path.join(__dirname,'/build/index.html'));
+});
 
 app.use(express.json());
 // app.use(cors({credentials:true, origin:'http://localhost:3000/'}));
