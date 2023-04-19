@@ -9,6 +9,7 @@ const cookiePars = require('cookie-parser');
 dotenv.config();
 
 const mongoose = require("mongoose");
+const User = require('./models/User');
 
 mongoose.connect(process.env.MONGO_URL).then(()=>console.log("DB successfully connected!!")).catch(
     (err)=>{
@@ -17,7 +18,7 @@ mongoose.connect(process.env.MONGO_URL).then(()=>console.log("DB successfully co
 )
 
 app.use(express.json());
-app.use(cors({credentials:true, origin:'http://localhost:3000/'}));
+// app.use(cors({credentials:true, origin:'http://localhost:3000/'}));
 app.use(cookiePars());
 app.use("/auth", authRoute);
 
@@ -25,7 +26,7 @@ app.get('/welcome',(req,res)=>{
     res.json(req.cookie);
 })
 
-app.post('/answer/verify', (req,res)=>{
+app.post('/answer/verify', async (req,res)=>{
     const {level, answer}= req.body;
 
     const ans=[
@@ -43,9 +44,9 @@ app.post('/answer/verify', (req,res)=>{
     ]
     console.log(ans[level-1].ans==answer);
     if(ans[level-1].ans==answer){
-        const update =  await User.findOneAndUpdate({_id: req.body.user}, {$inc: {level: 1}})
-        console.log(update);
-        res.json("ok");
+       const update =  await User.findOneAndUpdate({_id: req.body.user}, {$inc: {level: 1}})
+       console.log(update);
+       res.json("ok");
     }
     else{
        res.status(400).json("wrong");

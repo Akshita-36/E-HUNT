@@ -96,7 +96,7 @@ function Level1() {
         e.preventDefault();
         const response = await fetch("/answer/verify",{
             method : 'POST',
-            body : JSON.stringify({level,answer}),
+            body : JSON.stringify({level,answer, user: window.localStorage.getItem("userId")}),
             headers : {'Content-Type' : 'application/json'},
         });
         console.log(response);

@@ -75,7 +75,8 @@ function SignIn() {
 
         if(response.ok){
             response.json().then(userInfo =>{
-         
+                //console.log(userInfo);
+                window.localStorage.setItem("userId", userInfo.user)
                 setRedirect(true);
                
             })
