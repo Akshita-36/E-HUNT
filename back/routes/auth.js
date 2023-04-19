@@ -28,6 +28,7 @@ router.post("/register", async(req,res)=>{
     }
 })
 
+
 router.post("/signin", async(req,res)=>{
     const {email,password} = req.body;
     //console.log(req.body);
@@ -65,6 +66,15 @@ router.get("/admin",(req,res)=>{
     }).catch(err=>{
         console.log(err);
     })
+})
+
+router.post("/level/get", async (req, res) => {
+    const id = req.body.id
+    const user = await User.findOne({ _id: id })
+    if(!user) res.json({error: true, message: "User not found."})
+    else {
+        res.status(200).json({level: user.level})
+    }
 })
 
 

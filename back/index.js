@@ -43,7 +43,9 @@ app.post('/answer/verify', (req,res)=>{
     ]
     console.log(ans[level-1].ans==answer);
     if(ans[level-1].ans==answer){
-       res.json("ok");
+        const update =  await User.findOneAndUpdate({_id: req.body.user}, {$inc: {level: 1}})
+        console.log(update);
+        res.json("ok");
     }
     else{
        res.status(400).json("wrong");
