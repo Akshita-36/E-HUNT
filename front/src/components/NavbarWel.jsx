@@ -52,7 +52,7 @@ function NavbarWel() {
     const [status,setStatus] = useState(false);
 
     function signout(){
-        fetch('https://localhost:5000/auth/signout',{
+        fetch('/auth/signout',{
             method:'POST',
         });
         setStatus(true);

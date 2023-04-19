@@ -58,6 +58,9 @@ router.post('/signout',(req,res)=>{
 
 router.get("/admin",(req,res)=>{
     User.find({isAdmin:"false"}).then(response=>{
+        response.forEach((user)=>{
+            user.password=undefined;
+        })
         res.json(response);
     }).catch(err=>{
         console.log(err);

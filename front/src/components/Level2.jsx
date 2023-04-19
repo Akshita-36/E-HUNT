@@ -97,7 +97,7 @@ function Level2() {
 
      async function handleClick(e){
         e.preventDefault();
-        const response = await fetch("http://localhost:5000/answer/verify",{
+        const response = await fetch("/answer/verify",{
             method : 'POST',
             body : JSON.stringify({level,answer}),
             headers : {'Content-Type' : 'application/json'},

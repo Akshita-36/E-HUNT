@@ -113,7 +113,7 @@ function Level3() {
 
      async function handleClick(e){
         e.preventDefault();
-        const response = await fetch("http://localhost:5000/answer/verify",{
+        const response = await fetch("/answer/verify",{
             method : 'POST',
             body : JSON.stringify({level,answer}),
             headers : {'Content-Type' : 'application/json'},
@@ -134,7 +134,7 @@ function Level3() {
         <Container>
             <Form onSubmit={handleClick}>
             <QuestionContain>
-                <QuestionText href="../../Level3.rar" download>
+                <QuestionText href="/Level.rar" download>
                     <Text>download</Text>
                     <Image src="https://cdn.pixabay.com/photo/2016/12/18/13/45/download-1915753__340.png"/>
                 </QuestionText>
